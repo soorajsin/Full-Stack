@@ -1,0 +1,589 @@
+// classList vs className
+undefined
+const div = document.createElement('div');
+undefined
+div.className='a';
+'a'
+div.className ='b';
+'b'
+div.classList;
+DOMTokenList ['b', value: 'b']
+div.className;
+'b'
+div.classList.add('a');
+undefined
+div.classList.add('d');
+undefined
+div.classList
+DOMTokenList(3) ['b', 'a', 'd', value: 'b a d']
+div.classList.remove('b');
+undefined
+div.classList;
+DOMTokenList(2) ['a', 'd', value: 'a d']
+div.classList.toggle('w');
+true
+div.classList;
+DOMTokenList(3) ['a', 'd', 'w', value: 'a d w']
+div.classList.toggle('w');
+false
+div.classList;
+DOMTokenList(2) ['a', 'd', value: 'a d']
+div.classList.contains('a');
+true
+div.classList.contains('y');
+false
+ 6  
+console-1669443218350.log
+@@ -0,0 +1,6 @@
+var e = 60.849999999999994
+undefined
+e;
+60.849999999999994
+e.toFixed(2);
+'60.85'
+ 148  
+console-1669456564809.log
+@@ -0,0 +1,148 @@
+// ES6 (2015) let
+undefined
+function useLet(){
+    console.log(i);
+    for(let i = 1; i<=10; i++){
+        console.log(i);
+    }
+}
+undefined
+useLet();
+VM282:2 Uncaught ReferenceError: i is not defined
+    at useLet (<anonymous>:2:17)
+    at <anonymous>:1:1
+useLet @ VM282:2
+(anonymous) @ VM301:1
+function useLet(){
+   // console.log(i);
+    for(let i = 1; i<=10; i++){
+        console.log(i);
+    }
+    console.log(i);
+}
+undefined
+useLet();
+VM332:4 1
+VM332:4 2
+VM332:4 3
+VM332:4 4
+VM332:4 5
+VM332:4 6
+VM332:4 7
+VM332:4 8
+VM332:4 9
+VM332:4 10
+VM332:6 Uncaught ReferenceError: i is not defined
+    at useLet (<anonymous>:6:17)
+    at <anonymous>:1:1
+useLet @ VM332:6
+(anonymous) @ VM338:1
+function useLet(){
+    // var i; 
+    console.log(i);
+    for(var i = 1; i<=10; i++){
+        console.log(i);
+    }
+    console.log(i);
+}
+undefined
+useLet();
+VM414:3 undefined
+VM414:5 1
+VM414:5 2
+VM414:5 3
+VM414:5 4
+VM414:5 5
+VM414:5 6
+VM414:5 7
+VM414:5 8
+VM414:5 9
+VM414:5 10
+VM414:7 11
+undefined
+function useBlockLevel(){
+    // var i; 
+    console.log(i);
+    // I work like block level
+    (function(){
+    for(var i = 1; i<=10; i++){
+        console.log(i);
+    })();
+    }
+    console.log(i);
+}
+VM619:8 Uncaught SyntaxError: Unexpected token ')'
+function useBlockLevel(){
+    // var i; 
+    console.log(i);
+    // I work like block level
+    (function(){
+    for(var i = 1; i<=10; i++){
+        console.log(i);
+    }
+    })();
+    console.log(i);
+}
+undefined
+useBlockLevel();
+VM662:3 Uncaught ReferenceError: i is not defined
+    at useBlockLevel (<anonymous>:3:17)
+    at <anonymous>:1:1
+useBlockLevel @ VM662:3
+(anonymous) @ VM681:1
+function useBlockLevel(){
+    // var i; 
+    //console.log(i);
+    // I work like block level
+    (function(){
+    for(var i = 1; i<=10; i++){
+        console.log(i);
+    }
+    })();
+    console.log(i);
+}
+undefined
+useBlockLevel();
+VM693:7 1
+VM693:7 2
+VM693:7 3
+VM693:7 4
+VM693:7 5
+VM693:7 6
+VM693:7 7
+VM693:7 8
+VM693:7 9
+VM693:7 10
+VM693:10 Uncaught ReferenceError: i is not defined
+    at useBlockLevel (<anonymous>:10:17)
+    at <anonymous>:1:1
+useBlockLevel @ VM693:10
+(anonymous) @ VM699:1
+function useBlockLevel(){
+    // var i; 
+    //console.log(i);
+    // I work like block level
+    (function(){
+    for(var i = 1; i<=10; i++){
+        console.log(i);
+    }
+    })();
+   // console.log(i);
+}
+undefined
+useBlockLevel();
+VM710:7 1
+VM710:7 2
+VM710:7 3
+VM710:7 4
+VM710:7 5
+VM710:7 6
+VM710:7 7
+VM710:7 8
+VM710:7 9
+VM710:7 10
+undefined
+typeof console;
+'object'
+typeof console.log
+'function'
+ 93  
+console-1669456570111.log
+@@ -0,0 +1,93 @@
+var e = function (){
+var count = 1;
+function counter(){
+
+    count++;
+    return count;
+}
+    return counter;
+}();
+undefined
+e;
+ƒ counter(){
+
+    count++;
+    return count;
+}
+function(){
+    console.log("Hello AMit ");
+}()
+VM216:1 Uncaught SyntaxError: Function statements require a function name
+(function(){
+    console.log("Hello AMit ");
+})()
+VM229:2 Hello AMit 
+undefined
+(function(){
+    console.log("Hello AMit ");
+})()
+VM259:2 Hello AMit 
+undefined
+(function(){
+    console.log("Hello AMit ");
+    (function(){
+        console.log("Hi AMit ");
+    })();
+})()
+VM406:2 Hello AMit 
+VM406:4 Hi AMit 
+undefined
+(function(){
+    console.log("Hello AMit ");
+    return function(){
+        console.log("Hi AMit ");
+    }
+})()
+VM435:2 Hello AMit 
+ƒ (){
+        console.log("Hi AMit ");
+    }
+var f = (function(){
+    console.log("Hello AMit ");
+    return function(){
+        console.log("Hi AMit ");
+    }
+})();
+VM539:2 Hello AMit 
+undefined
+f;
+ƒ (){
+        console.log("Hi AMit ");
+    }
+f();
+VM539:4 Hi AMit 
+undefined
+ (function(){
+    console.log("Hello AMit ");
+    return function(){
+        console.log("Hi AMit ");
+    }
+})()();
+VM616:2 Hello AMit 
+VM616:4 Hi AMit 
+undefined
+var t = (function (){
+var count = 1;
+function counter(){
+
+    count++;
+    return count;
+}
+    return counter;
+})();
+undefined
+t();
+2
+t();
+3
+t();
+4
+t();
+5
+t();
+6
+ 47  
+console-1669456579792.log
+@@ -0,0 +1,47 @@
+function init(){
+var count = 1;
+function counter(){
+
+    count++;
+    return count;
+}
+    return counter;
+}
+undefined
+var e = init();
+undefined
+e;
+ƒ counter(){
+
+    count++;
+    return count;
+}
+typeof e;
+'function'
+console.dir(e);
+VM235:1 ƒ counter()arguments: nullcaller: nulllength: 0name: "counter"prototype: {constructor: ƒ}[[FunctionLocation]]: VM126:3[[Prototype]]: ƒ ()[[Scopes]]: Scopes[2]0: Closure (init) {count: 1}1: Global {window: Window, self: Window, document: document, name: '', location: Location, …}
+undefined
+e();
+2
+e();
+3
+e();
+4
+e();
+5
+e();
+6
+count;
+VM279:1 Uncaught ReferenceError: count is not defined
+    at <anonymous>:1:1
+(anonymous) @ VM279:1
+var e = init();
+undefined
+e();
+2
+e();
+3
+e();
+4
+e();
+5
+ 46  
+console-1669456585613.log
+@@ -0,0 +1,46 @@
+function counter(){
+    count++;
+    return count;
+}
+undefined
+counter();
+VM179:2 Uncaught ReferenceError: count is not defined
+    at counter (<anonymous>:2:5)
+    at <anonymous>:1:1
+counter @ VM179:2
+(anonymous) @ VM202:1
+function counter(){
+    var count = 1;
+    count++;
+    return count;
+}
+undefined
+counter();
+2
+counter();
+2
+counter();
+2
+var count = 1;
+function counter(){
+
+    count++;
+    return count;
+}
+undefined
+counter();
+2
+counter();
+3
+counter();
+4
+counter();
+5
+counter();
+6
+count = "Amit";
+'Amit'
+counter();
+NaN
+counter();
+NaN
+ 197  
+console-1669456592013.log
+@@ -0,0 +1,197 @@
+function calc(){
+    var add = function (a,b){
+        return a + b;
+    }
+    var sub = function (a,b){
+        return a-b;
+
+    }
+    return {add : add, sub};
+}
+undefined
+var t = calc();
+undefined
+t;
+{add: ƒ, sub: ƒ}
+t.add(10,20);
+30
+var a = 100; // Global Scope
+function scope(){
+    if(10>2){
+        var a = 20; // Fn Level scope
+        let a = 10; // Block Level Scope
+        console.log(a);
+    }
+}
+VM615:4 Uncaught SyntaxError: Identifier 'a' has already been declared
+var a = 100; // Global Scope
+
+function scope(){
+     var a = 20; // Fn Level scope
+    if(10>2){
+
+        let a = 10; // Block Level Scope
+        console.log(a);
+    }
+}
+undefined
+var a = 100; // Global Scope
+
+function scope(){
+    console.log(a);
+    if(100>2){
+     var a = 20; // Fn Level scope
+    }
+    if(10>2){
+
+        let a = 10; // Block Level Scope
+        console.log(a);
+    }
+}
+undefined
+scope();
+VM742:4 undefined
+VM742:11 10
+undefined
+a;
+100
+var a = 100; // Global Scope
+
+function scope(){
+    console.log(a);
+    if(100>2){
+     var a = 20; // Fn Level scope
+        console.log(a);
+    }
+    if(10>2){
+
+        let a = 10; // Block Level Scope
+        console.log(a);
+    }
+}
+undefined
+scope();
+VM830:4 undefined
+VM830:7 20
+VM830:12 10
+undefined
+var a = 100; // Global Scope
+
+function scope(){
+    console.log(a);
+    if(100>2){
+     var a = 20; // Fn Level scope
+        console.log(a , window.a);
+    }
+    if(10>2){
+
+        let a = 10; // Block Level Scope
+        console.log(a);
+    }
+}
+undefined
+window;
+Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+window.a;
+100
+scope(); // window.scope()
+VM937:4 undefined
+VM937:7 20 100
+VM937:12 10
+undefined
+var a = 100; // Global Scope
+
+function scope(){
+    console.log(a);
+    if(100>2){
+     var a = 20; // Fn Level scope
+        console.log(a , this.a);
+        // this it is a keyword, it hold the current calling object reference
+    }
+    if(10>2){
+
+        let a = 10; // Block Level Scope
+        console.log(a);
+    }
+}
+undefined
+window.scope();
+VM1212:4 undefined
+VM1212:7 20 100
+VM1212:13 10
+undefined
+window ;
+Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+this;
+Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+window == this;
+true
+var a = 100; // Global Scope
+
+function scope(){
+    console.log(a);
+    if(100>2){
+     var a = 20; // Fn Level scope
+        console.log(a , this.a);
+        // this it is a keyword, it hold the current calling object reference
+    }
+    if(10>2){
+       n=9000;
+        let a = 10; // Block Level Scope
+        console.log(a);
+    }
+}
+undefined
+scope();
+VM1344:4 undefined
+VM1344:7 20 100
+VM1344:13 10
+undefined
+var a = 100; // Global Scope
+
+function scope(){
+    console.log(a);
+    if(100>2){
+     var a = 20; // Fn Level scope
+        console.log(a , this.a);
+        // this it is a keyword, it hold the current calling object reference
+    }
+    if(10>2){
+       n=9000;
+        let a = 10; // Block Level Scope
+        console.log(a, n);
+    }
+}
+undefined
+scope();
+VM1404:4 undefined
+VM1404:7 20 100
+VM1404:13 10 9000
+undefined
+window.n;
+9000
+function calc(x,y){
+    var add = function(){
+        return  x + y;
+    }
+    var sub = function(z){
+        return  x - y - z;
+    }
+    return {add, sub};
+}
+undefined
+var e = calc();
+undefined
+e;
+{add: ƒ, sub: ƒ}
+var e = calc(10,20);
+undefined
+e;
+{add: ƒ, sub: ƒ}
+e.add();
+30
+e.sub(2);
+-12
+console.dir(e);
+VM2002:1 Objectadd: ƒ ()arguments: nullcaller: nulllength: 0name: "add"prototype: {constructor: ƒ}[[FunctionLocation]]: VM1787:2[[Prototype]]: ƒ ()[[Scopes]]: Scopes[2]0: Closure (calc) {y: 20, x: 10}1: Global {window: Window, self: Window, document: document, name: '', location: Location, …}sub: ƒ (z)[[Prototype]]: Object
+undefined
