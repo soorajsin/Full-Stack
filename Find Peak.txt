@@ -1,0 +1,22 @@
+class Solution {
+    public int findPeakElement(int[] nums) {
+       int left = 0;
+        int right = nums.length - 1;
+        
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            
+            if (nums[mid] > nums[mid + 1]) {
+                // move to the left side
+                right = mid;
+            } else {
+                // move to the right side
+                left = mid + 1;
+            }
+        }
+        
+        // left and right are equal, so either can be returned
+        return left;
+        
+    }
+}
