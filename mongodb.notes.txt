@@ -1,0 +1,1330 @@
+Sort
+Limit
+
+
+Update Queries
+db.coll_name.updateOne({name : "Max"}, {$set : {name : "Set Max"}})
+db.coll_name.updateMany({name : "Max"}, {$set : {name : "Set Max"}})
+db.coll_name.updateOne({age : {$gt:20}}, {$set : {name : "Set Max"}})
+
+$inc
+db.coll_name.updateOne({filter}, {$inc : {age : 5}})
+
+to decrement use $inc with (-)ve value
+db.coll_name.updateOne({filter}, {$inc : {age : -5}})
+
+$unset : remove any field
+
+Delete
+deleteOne()
+deleteMany()
+
+db.coll_name.deleteOne({filter})
+db.coll_name.deleteMany({}) - delete all records
+
+
+
+
+
+
+
+
+
+
+
+
+Group By
+
+Aggregate Functions
+- SUM, COUNT, AVG, MIN, MAX
+
+each / category
+
+pipelines - aggregate
+filters / projection / limit / sort / joins / group
+
+db.employees.aggregate(
+	{
+		$match : {
+			dept :  "IT"
+		}
+	}
+);
+
+db.employees.aggregate([
+	{
+		$group : {
+				_id : {department : "$dept"},
+				num : {$sum : 1}
+		}
+	}
+])
+
+
+db.employees.aggregate([
+	{
+		$match : {
+				"details.designation" : "Developer"
+		}
+	},
+
+	{
+		$group : {
+				_id : {department : "$dept"},
+				num : {$sum : 1}
+		}
+	}
+])
+
+
+
+
+Atlas atlas-2yo2y2-shard-0 [primary] test> show dbs;
+shop       8.00 KiB
+shopapp   80.00 KiB
+test_db    8.00 KiB
+admin    336.00 KiB
+local      4.11 GiB
+Atlas atlas-2yo2y2-shard-0 [primary] test> use shopapp;
+switched to db shopapp
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> show collections;
+customers
+movies
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find();
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 7.8
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find();
+[
+  {
+    _id: ObjectId("63370dcd870f986ce0fee2d3"),
+    name: 'Max',
+    age: 26,
+    salary: 45000.45,
+    phone: Long("9768564738")
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2df"),
+    name: 'Aman',
+    email: 'aman@yahoo.com',
+    phone: [ 9876540000, 9096754765 ],
+    address: { city: 'noida', state: 'up', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2db"),
+    name: 'Nick',
+    email: 'nick90@gmail.com',
+    phone: [ 9876547894, 9090908765 ],
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dd"),
+    name: 'Nick',
+    email: 'nick90@gmail.com',
+    phone: [ 9876547894, 9090908765 ],
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2da"),
+    name: 'Sam',
+    email: 'sam45@gmail.com',
+    phone: 9766785646
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dc"),
+    name: 'Tom',
+    email: 'tom@gmail.com',
+    phone: [ 9876547111, 9444408765 ],
+    address: { city: 'noida', state: 'up', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2de"),
+    name: 'Rahul',
+    email: 'rahul11@gmail.com',
+    phone: 9877747894,
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  { _id: 11, name: 'Steve', age: 40, email: 'steve@gmail.com' }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().limit();
+MongoInvalidArgumentError: Operation "limit" requires an integer
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().limit(4);
+[
+  {
+    _id: ObjectId("63370dcd870f986ce0fee2d3"),
+    name: 'Max',
+    age: 26,
+    salary: 45000.45,
+    phone: Long("9768564738")
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2df"),
+    name: 'Aman',
+    email: 'aman@yahoo.com',
+    phone: [ 9876540000, 9096754765 ],
+    address: { city: 'noida', state: 'up', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2db"),
+    name: 'Nick',
+    email: 'nick90@gmail.com',
+    phone: [ 9876547894, 9090908765 ],
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dd"),
+    name: 'Nick',
+    email: 'nick90@gmail.com',
+    phone: [ 9876547894, 9090908765 ],
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().limit(2);
+[
+  {
+    _id: ObjectId("63370dcd870f986ce0fee2d3"),
+    name: 'Max',
+    age: 26,
+    salary: 45000.45,
+    phone: Long("9768564738")
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2df"),
+    name: 'Aman',
+    email: 'aman@yahoo.com',
+    phone: [ 9876540000, 9096754765 ],
+    address: { city: 'noida', state: 'up', country: 'India' }
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().sort();
+[
+  {
+    _id: ObjectId("63370dcd870f986ce0fee2d3"),
+    name: 'Max',
+    age: 26,
+    salary: 45000.45,
+    phone: Long("9768564738")
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2df"),
+    name: 'Aman',
+    email: 'aman@yahoo.com',
+    phone: [ 9876540000, 9096754765 ],
+    address: { city: 'noida', state: 'up', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2db"),
+    name: 'Nick',
+    email: 'nick90@gmail.com',
+    phone: [ 9876547894, 9090908765 ],
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dd"),
+    name: 'Nick',
+    email: 'nick90@gmail.com',
+    phone: [ 9876547894, 9090908765 ],
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2da"),
+    name: 'Sam',
+    email: 'sam45@gmail.com',
+    phone: 9766785646
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dc"),
+    name: 'Tom',
+    email: 'tom@gmail.com',
+    phone: [ 9876547111, 9444408765 ],
+    address: { city: 'noida', state: 'up', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2de"),
+    name: 'Rahul',
+    email: 'rahul11@gmail.com',
+    phone: 9877747894,
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  { _id: 11, name: 'Steve', age: 40, email: 'steve@gmail.com' }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().sort({name : 1});
+[
+  {
+    _id: ObjectId("633713a7870f986ce0fee2df"),
+    name: 'Aman',
+    email: 'aman@yahoo.com',
+    phone: [ 9876540000, 9096754765 ],
+    address: { city: 'noida', state: 'up', country: 'India' }
+  },
+  {
+    _id: ObjectId("63370dcd870f986ce0fee2d3"),
+    name: 'Max',
+    age: 26,
+    salary: 45000.45,
+    phone: Long("9768564738")
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2db"),
+    name: 'Nick',
+    email: 'nick90@gmail.com',
+    phone: [ 9876547894, 9090908765 ],
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dd"),
+    name: 'Nick',
+    email: 'nick90@gmail.com',
+    phone: [ 9876547894, 9090908765 ],
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2de"),
+    name: 'Rahul',
+    email: 'rahul11@gmail.com',
+    phone: 9877747894,
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2da"),
+    name: 'Sam',
+    email: 'sam45@gmail.com',
+    phone: 9766785646
+  },
+  { _id: 11, name: 'Steve', age: 40, email: 'steve@gmail.com' },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dc"),
+    name: 'Tom',
+    email: 'tom@gmail.com',
+    phone: [ 9876547111, 9444408765 ],
+    address: { city: 'noida', state: 'up', country: 'India' }
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().sort({name : -1});
+[
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dc"),
+    name: 'Tom',
+    email: 'tom@gmail.com',
+    phone: [ 9876547111, 9444408765 ],
+    address: { city: 'noida', state: 'up', country: 'India' }
+  },
+  { _id: 11, name: 'Steve', age: 40, email: 'steve@gmail.com' },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2da"),
+    name: 'Sam',
+    email: 'sam45@gmail.com',
+    phone: 9766785646
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2de"),
+    name: 'Rahul',
+    email: 'rahul11@gmail.com',
+    phone: 9877747894,
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2db"),
+    name: 'Nick',
+    email: 'nick90@gmail.com',
+    phone: [ 9876547894, 9090908765 ],
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dd"),
+    name: 'Nick',
+    email: 'nick90@gmail.com',
+    phone: [ 9876547894, 9090908765 ],
+    address: { city: 'delhi', state: 'delhi', country: 'India' }
+  },
+  {
+    _id: ObjectId("63370dcd870f986ce0fee2d3"),
+    name: 'Max',
+    age: 26,
+    salary: 45000.45,
+    phone: Long("9768564738")
+  },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2df"),
+    name: 'Aman',
+    email: 'aman@yahoo.com',
+    phone: [ 9876540000, 9096754765 ],
+    address: { city: 'noida', state: 'up', country: 'India' }
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().sort({name : -1}).limit(3);
+[
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dc"),
+    name: 'Tom',
+    email: 'tom@gmail.com',
+    phone: [ 9876547111, 9444408765 ],
+    address: { city: 'noida', state: 'up', country: 'India' }
+  },
+  { _id: 11, name: 'Steve', age: 40, email: 'steve@gmail.com' },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2da"),
+    name: 'Sam',
+    email: 'sam45@gmail.com',
+    phone: 9766785646
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.update
+db.customers.updateMany  db.customers.updateOne
+
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.updateOne({name : "Tom"},{$set : {age : 30}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().sort({name : -1}).limit(3);
+[
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dc"),
+    name: 'Tom',
+    email: 'tom@gmail.com',
+    phone: [ 9876547111, 9444408765 ],
+    address: { city: 'noida', state: 'up', country: 'India' },
+    age: 30
+  },
+  { _id: 11, name: 'Steve', age: 40, email: 'steve@gmail.com' },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2da"),
+    name: 'Sam',
+    email: 'sam45@gmail.com',
+    phone: 9766785646
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.updateOne({name : "Tom"},{$set : {gender : "male"}},{upsert : false});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().sort({name : -1}).limit(3);
+[
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dc"),
+    name: 'Tom',
+    email: 'tom@gmail.com',
+    phone: [ 9876547111, 9444408765 ],
+    address: { city: 'noida', state: 'up', country: 'India' },
+    age: 30,
+    gender: 'male'
+  },
+  { _id: 11, name: 'Steve', age: 40, email: 'steve@gmail.com' },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2da"),
+    name: 'Sam',
+    email: 'sam45@gmail.com',
+    phone: 9766785646
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.updateMany({name : "Tom"},{$set : {college : "DU"}},{upsert : false});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().sort({name : -1}).limit(3);
+[
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dc"),
+    name: 'Tom',
+    email: 'tom@gmail.com',
+    phone: [ 9876547111, 9444408765 ],
+    address: { city: 'noida', state: 'up', country: 'India' },
+    age: 30,
+    gender: 'male',
+    college: 'DU'
+  },
+  { _id: 11, name: 'Steve', age: 40, email: 'steve@gmail.com' },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2da"),
+    name: 'Sam',
+    email: 'sam45@gmail.com',
+    phone: 9766785646
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.updateMany({name : "Tom"},{$set : {branch : "CS"}},upsert=false);
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().sort({name : -1}).limit(3);
+[
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dc"),
+    name: 'Tom',
+    email: 'tom@gmail.com',
+    phone: [ 9876547111, 9444408765 ],
+    address: { city: 'noida', state: 'up', country: 'India' },
+    age: 30,
+    gender: 'male',
+    college: 'DU',
+    branch: 'CS'
+  },
+  { _id: 11, name: 'Steve', age: 40, email: 'steve@gmail.com' },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2da"),
+    name: 'Sam',
+    email: 'sam45@gmail.com',
+    phone: 9766785646
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.updateMany({name : "Tom"},{$set : {sub : 5}},upsert:false);
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:64)
+
+> 1 | db.customers.updateMany({name : "Tom"},{$set : {sub : 5}},upsert:false);
+    |                                                                 ^
+  2 |
+
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.updateMany({name : "Tom"},{$set : {sub : 5},upsert:false});
+MongoServerError: Unknown modifier: upsert. Expected a valid update modifier or pipeline-style update specified as an array
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.updateMany({name : "Tom"},{$set : {sub : 5}},{upsert:false});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().sort({name : -1}).limit(3);
+[
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dc"),
+    name: 'Tom',
+    email: 'tom@gmail.com',
+    phone: [ 9876547111, 9444408765 ],
+    address: { city: 'noida', state: 'up', country: 'India' },
+    age: 30,
+    gender: 'male',
+    college: 'DU',
+    branch: 'CS',
+    sub: 5
+  },
+  { _id: 11, name: 'Steve', age: 40, email: 'steve@gmail.com' },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2da"),
+    name: 'Sam',
+    email: 'sam45@gmail.com',
+    phone: 9766785646
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.updateMany({name : "Tom"},{$set : {"address.pin" : 201013}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.customers.find().sort({name : -1}).limit(3);
+[
+  {
+    _id: ObjectId("633713a7870f986ce0fee2dc"),
+    name: 'Tom',
+    email: 'tom@gmail.com',
+    phone: [ 9876547111, 9444408765 ],
+    address: { city: 'noida', state: 'up', country: 'India', pin: 201013 },
+    age: 30,
+    gender: 'male',
+    college: 'DU',
+    branch: 'CS',
+    sub: 5
+  },
+  { _id: 11, name: 'Steve', age: 40, email: 'steve@gmail.com' },
+  {
+    _id: ObjectId("633713a7870f986ce0fee2da"),
+    name: 'Sam',
+    email: 'sam45@gmail.com',
+    phone: 9766785646
+  }
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find();
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 7.8
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.updateOne({name : "Ironman"}, {$set:{genre:["action","sci-fi"]}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find();
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 7.8,
+    genre: [ 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.updateOne({name : "Hulk"}, {$set:{genre:["thriller","action","sci-fi"]}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.updateOne({name : "Avengers End Game"}, {$set:{genre:["thriller","action","sci-fi"]}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.updateOne({name : "KGF"}, {$set:{genre:["thriller","action","crime"]}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.updateOne({name : "KGF:2"}, {$set:{genre:["thriller","action","crime"]}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find();
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 7.8,
+    genre: [ 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2,
+    genre: [ 'thriller', 'action', 'crime' ]
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'crime' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find({genre : "action"});
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 7.8,
+    genre: [ 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2,
+    genre: [ 'thriller', 'action', 'crime' ]
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'crime' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find({genre : "sci-fi"});
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 7.8,
+    genre: [ 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find({genre : {$in : ["thriller","sci-fi"]}});
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 7.8,
+    genre: [ 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2,
+    genre: [ 'thriller', 'action', 'crime' ]
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'crime' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find({genre : {$in : ["thriller","sci-fi"]}});
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 7.8,
+    genre: [ 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2,
+    genre: [ 'thriller', 'action', 'crime' ]
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'crime' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find({genre : {$in : ["thriller","crime"]}});
+[
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2,
+    genre: [ 'thriller', 'action', 'crime' ]
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'crime' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find({genre : "sci-fi"});
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 7.8,
+    genre: [ 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find({$and : {genre : "sci-fi", genre : "action"});
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:59)
+
+> 1 | db.movies.find({$and : {genre : "sci-fi", genre : "action"});
+    |                                                            ^
+  2 |
+
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find({$and : [{genre : "sci-fi"}, {genre : "action"}]);
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:63)
+
+> 1 | db.movies.find({$and : [{genre : "sci-fi"}, {genre : "action"}]);
+    |                                                                ^
+  2 |
+
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find({$and : [{genre : "sci-fi"}, {genre : "action"}]});
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 7.8,
+    genre: [ 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find({$or : [{genre : "sci-fi"}, {genre : "action"}]});
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 7.8,
+    genre: [ 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2,
+    genre: [ 'thriller', 'action', 'crime' ]
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'crime' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.updateOne({name:"Ironman"}, {$inc : {rating : 1}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find();
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 8.8,
+    genre: [ 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2,
+    genre: [ 'thriller', 'action', 'crime' ]
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'crime' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.updateOne({name:"Ironman"}, {$dec : {rating : 1}});
+MongoServerError: Unknown modifier: $dec. Expected a valid update modifier or pipeline-style update specified as an array
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.updateOne({name:"Ironman"}, {$inc : {rating : -1}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find();
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    rating: 7.800000000000001,
+    genre: [ 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2,
+    genre: [ 'thriller', 'action', 'crime' ]
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'crime' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.updateOne({name:"Ironman"}, {$unset : {rating : ""}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find();
+[
+  {
+    _id: ObjectId("63371030870f986ce0fee2d5"),
+    name: 'Ironman',
+    genre: [ 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2,
+    genre: [ 'thriller', 'action', 'crime' ]
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'crime' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.deleteOne();
+MongoshInvalidInputError: [COMMON-10001] Missing required argument at position 0 (Collection.deleteOne)
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.deleteOne({name : "Ironman"});
+{ acknowledged: true, deletedCount: 1 }
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> db.movies.find();
+[
+  {
+    _id: ObjectId("6337103b870f986ce0fee2d6"),
+    name: 'Hulk',
+    rating: 7,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337104e870f986ce0fee2d7"),
+    name: 'Avengers End Game',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'sci-fi' ]
+  },
+  {
+    _id: ObjectId("6337105b870f986ce0fee2d8"),
+    name: 'KGF',
+    rating: 8.2,
+    genre: [ 'thriller', 'action', 'crime' ]
+  },
+  {
+    _id: ObjectId("63371099870f986ce0fee2d9"),
+    name: 'KGF:2',
+    rating: 8,
+    genre: [ 'thriller', 'action', 'crime' ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] shopapp> use ems;
+switched to db ems
+Atlas atlas-2yo2y2-shard-0 [primary] ems> show collections;
+
+Atlas atlas-2yo2y2-shard-0 [primary] ems> db.employees.insert
+db.employees.insertMany  db.employees.insertOne
+
+Atlas atlas-2yo2y2-shard-0 [primary] ems> db.employees.insertMany([
+...     {
+...         "name" : "John",
+...         "sal" : 46000,
+...         "dept" : "IT",
+...         "details" : [
+...             {
+...                 "designation" : "Developer",
+...                 "exp" : 4
+...             },
+...             {
+...                 "designation" : "Team Leader",
+...                 "exp" : 3
+...             }
+...         ]
+...     },
+...     {
+...         "name" : "Mac",
+...         "sal" : 40000,
+...         "dept" : "Sales",
+...         "details" : [
+...             {
+...                 "designation" : "Sales Head",
+...                 "exp" : 3
+...             },
+...             {
+...                 "designation" : "Sales Manager",
+...                 "exp" : 1
+...             }
+...         ]
+...     },
+...     {
+...         "name" : "Shawn",
+...         "sal" : 35000,
+...         "dept" : "IT",
+...         "details" : [
+...             {
+...                 "designation" : "Developer",
+...                 "exp" : 2
+...             },
+...             {
+...                 "designation" : "Tester",
+...                 "exp" : 4
+...             },
+...             {
+...                 "designation" : "Project Manager",
+...                 "exp" : 2
+...             }
+...         ]
+...     },
+...     {
+...         "name" : "Tom",
+...         "sal" : 58000,
+...         "dept" : "HR",
+...         "details" : [
+...             {
+...                 "designation" : "HR",
+...                 "exp" : 2
+...             },
+...             {
+...                 "designation" : "HR Manager",
+...                 "exp" : 1
+...             }
+...         ]
+...     },
+...     {
+...         "name" : "Max",
+...         "sal" : 88000,
+...         "dept" : "IT",
+...         "details" : [
+...             {
+...                 "designation" : "Developer",
+...                 "exp" : 4
+...             },
+...             {
+...                 "designation" : "Senior Developer",
+...                 "exp" : 3
+...             },
+...             {
+...                 "designation" : "Team Leader",
+...                 "exp" : 2
+...             }
+...         ]
+...     },
+...     {
+...         "name" : "Smith",
+...         "sal" : 50000,
+...         "dept" : "Sales",
+...         "details" : [
+...             {
+...                 "designation" : "Sales Head",
+...                 "exp" : 4
+...             },
+...             {
+...                 "designation" : "Sales Manager",
+...                 "exp" : 2
+...             }
+...         ]
+...     },
+...     {
+...         "name" : "Ricky",
+...         "sal" : 20000,
+...         "dept" : "HR",
+...         "details" : [
+...             {
+...                 "designation" : "HR",
+...                 "exp" : 2
+...             }
+...         ]
+...     }
+... ]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("6457936fbeb5e3b73c97a33e"),
+    '1': ObjectId("6457936fbeb5e3b73c97a33f"),
+    '2': ObjectId("6457936fbeb5e3b73c97a340"),
+    '3': ObjectId("6457936fbeb5e3b73c97a341"),
+    '4': ObjectId("6457936fbeb5e3b73c97a342"),
+    '5': ObjectId("6457936fbeb5e3b73c97a343"),
+    '6': ObjectId("6457936fbeb5e3b73c97a344")
+  }
+}
+Atlas atlas-2yo2y2-shard-0 [primary] ems> db.employees.aggregate(
+...     {
+...             $match : {
+...                     dept :  "IT"
+...             }
+...     }
+... );
+[
+  {
+    _id: ObjectId("6457936fbeb5e3b73c97a33e"),
+    name: 'John',
+    sal: 46000,
+    dept: 'IT',
+    details: [
+      { designation: 'Developer', exp: 4 },
+      { designation: 'Team Leader', exp: 3 }
+    ]
+  },
+  {
+    _id: ObjectId("6457936fbeb5e3b73c97a340"),
+    name: 'Shawn',
+    sal: 35000,
+    dept: 'IT',
+    details: [
+      { designation: 'Developer', exp: 2 },
+      { designation: 'Tester', exp: 4 },
+      { designation: 'Project Manager', exp: 2 }
+    ]
+  },
+  {
+    _id: ObjectId("6457936fbeb5e3b73c97a342"),
+    name: 'Max',
+    sal: 88000,
+    dept: 'IT',
+    details: [
+      { designation: 'Developer', exp: 4 },
+      { designation: 'Senior Developer', exp: 3 },
+      { designation: 'Team Leader', exp: 2 }
+    ]
+  }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] ems> db.employees.aggregate([
+...     {
+...             $group : {
+...                             _id : {
+...                                             dept : "$dept"
+...                             }
+...             }
+...     }
+... ])
+[
+  { _id: { dept: 'IT' } },
+  { _id: { dept: 'Sales' } },
+  { _id: { dept: 'HR' } }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] ems> db.employees.aggregate([
+...     {
+...             $group : {
+...                             _id : {
+...                                             department : "$dept"
+...                             }
+...             }
+...     }
+... ])
+[
+  { _id: { department: 'HR' } },
+  { _id: { department: 'IT' } },
+  { _id: { department: 'Sales' } }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] ems> db.employees.aggregate([
+...     {
+...             $group : {
+...                             _id : {department : "$dept"},
+...                             num : {$sum : 1}
+...             }
+...     }
+... ])
+[
+  { _id: { department: 'IT' }, num: 3 },
+  { _id: { department: 'Sales' }, num: 2 },
+  { _id: { department: 'HR' }, num: 2 }
+]
+Atlas atlas-2yo2y2-shard-0 [primary] ems> db.employees.aggregate([
+...     {
+...             $match : {
+...                             "details.designation" : "Developer"
+...             }
+...     },
+...
+...     {
+...             $group : {
+...                             _id : {department : "$dept"},
+...                             num : {$sum : 1}
+...             }
+...     }
+... ])
+[ { _id: { department: 'IT' }, num: 3 } ]
+Atlas atlas-2yo2y2-shard-0 [primary] ems>
+
+
