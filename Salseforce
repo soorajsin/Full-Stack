@@ -1,0 +1,106 @@
+CRM Salesforce					
+S.No	Chapter	PlanCode	Subtopic	Methodology	Duration
+Stage 1 (25 Hours)					
+1	Salesforce Fundamentals	Introduction To CRM	What is CRM,Components of CRM,History of CRM,Objectives of CRM	Lecture	1
+		Introduction To Salesforce	Introduction to Salesforce, History of Salesforce	Lecture	1
+			Basics of Could Computing, Advantages and Disadvantages of Cloud Computing	Lecture	1
+			What is cloud-based CRM, Features of coud-based CRM,Introduction to Trailhead Platform	Lecture,Demo&Hands-on	1
+		Trailhead Platform	Discussion on Trailhead Profile, Badges, Points, Modules, Project	Lecture,Demo&Hands-on	1
+			Salesforce Platform basics, Trailhead Playground Management	Lecture,Demo&Hands-on	1
+			Introduction to the Platform Developer 1 Certification	Lecture,Demo&Hands-on	1
+			Introduction to AW Computing	Lecture,Demo&Hands-on	1
+			 Creating Trailhead account	Lecture,Demo&Hands-on	1
+			Salesforce Platform basics, Trailhead Playground Management, Introduction to Objects and Fields	Lecture,Demo&Hands-on	1
+2	Data Modelling and Management  & Formulas and Validations	Objects and Fields	Data types available in Salesforce Platform, Relationship, Types of Relationships	Lecture,Demo&Hands-on	1
+			Formula Fields, Roll-up Summary Fields	Lecture,Demo&Hands-on	1
+			Junction Object, Data Modeling	Lecture,Demo&Hands-on	1
+		Data Modelling	Data Management	Lecture,Demo&Hands-on	1
+			Formulas and Validations	Lecture,Demo&Hands-on	1
+			Build a Data Model for a Recruiting App	Lecture,Demo&Hands-on	1
+			Picklist Administration	Lecture,Demo&Hands-on	1
+			B2B Commerce on Lightning Experience Data Model	Lecture,Demo&Hands-on	1
+			Marketing Cloud Data Management	Lecture,Demo&Hands-on	1
+		User Management	Salesforce User Basics	Lecture,Demo&Hands-on	1
+			User Authentication	Lecture,Demo&Hands-on	1
+		Formulas and validations	use formula fields 	Lecture,Demo&Hands-on	1
+			Roll up summary,creating validation Rules	Lecture,Demo&Hands-on	1
+Stage -1 Revision					1
+Formative Assessment-1					1
+Stage 2 (25 Hours)					
+3	User Management	User Management	User Management	Lecture,Demo&Hands-on	1
+			Data Security	Lecture,Demo&Hands-on	1
+			Permission Set Groups	Lecture,Demo&Hands-on	1
+4	Logic And Process Automation	Salesforce Flow	Flow Basics	Lecture,Demo&Hands-on	1
+			Flow Builder	Lecture,Demo&Hands-on	1
+			Build a Simple Flow	Lecture,Demo&Hands-on	1
+			Salesforce Flow	Lecture,Demo&Hands-on	1
+			Screen Flow distribution	Lecture,Demo&Hands-on	1
+		Process Automation	Automate Business Processes for a Recruiting App	Lecture,Demo&Hands-on	1
+			Automate Your Business Processes with Salesforce Flow	Lecture,Demo&Hands-on	1
+			Platform Developer I Certification Prep: Process Automation and Logic	Lecture,Demo&Hands-on	1
+			Process Automation Specialist-1	Lecture,Demo&Hands-on	1
+			Process Automation Specialist-2	Lecture,Demo&Hands-on	1
+			Process Automation Specialist-3	Lecture,Demo&Hands-on	1
+			Process Automation Specialist-4	Lecture,Demo&Hands-on	1
+			Process Automation Specialist-5	Lecture,Demo&Hands-on	1
+5	User Interface	User Interface	Visualforce Basics, Lightning Experience Development	Lecture,Demo&Hands-on	1
+			Lightning Web Components Basics	Lecture,Demo&Hands-on	1
+			User Interface API	Lecture,Demo&Hands-on	1
+			Customize the User Interface for a Travel Approval App	Lecture,Demo&Hands-on	1
+	User Interface	Lightning AppBuilder	Basics and Custom Home page lightning Experience	Lecture,Demo&Hands-on	1
+			Build a custom Record page for lightning expreince and Mobile App	Lecture,Demo&Hands-on	1
+			Build App an Home page,custom components	Lecture,Demo&Hands-on	1
+Stage -2 Revision					1
+Formative Assessment-2					1
+Stage 3  (25 Hours)					
+	User Interface	User Interface	Customize the User Interface for a Recruiting App	Lecture,Demo&Hands-on	1
+			Platform Developer I Certification Prep: User Interface	Lecture,Demo&Hands-on	1
+6	Debug and Deployment Tools	Apex Basics	Build Apex Coding Skills	Lecture,Demo&Hands-on	1
+			Quick Start: Apex	Lecture,Demo&Hands-on	1
+			Developer Console Basics	Lecture,Demo&Hands-on	1
+			Use Apex to Automate Business Processes	Lecture,Demo&Hands-on	1
+			Use Apex to Automate Business Processes	Lecture,Demo&Hands-on	1
+			Apex Basics & Database	Lecture,Demo&Hands-on	1
+		Debug and Deployment Tools	Apex Triggers	Lecture,Demo&Hands-on	1
+			Database & .NET Basics	Lecture,Demo&Hands-on	1
+			Search Solution Basics	Lecture,Demo&Hands-on	1
+			Platform Events Basics	Lecture,Demo&Hands-on	1
+			Apex Specialist	Lecture,Demo&Hands-on	1
+			Apex Specialist	Lecture,Demo&Hands-on	1
+			Apex Specialist	Lecture,Demo&Hands-on	1
+			Apex Specialist	Lecture,Demo&Hands-on	1
+7	Testing	Apex Testing	Apex Testing	Lecture,Demo&Hands-on	1
+			Asynchronous Apex	Lecture,Demo&Hands-on	1
+			Apex Integration Services	Lecture,Demo&Hands-on	1
+			Apex Integration Services	Lecture,Demo&Hands-on	1
+8	Apex Triggers & Asynchronous Apex	Apex Triggers & Asynchronous Apex	Apex Triggers and Bulk Apex Triggers	Lecture,Demo&Hands-on	1
+			use future methods, use batch Apex	Lecture,Demo&Hands-on	1
+			control process with queable Apex	Lecture,Demo&Hands-on	1
+			scheduling jobs and Monitoring	Lecture,Demo&Hands-on	1
+Stage -3 Revision					1
+Formative Assessment-3					1
+Stage 4 (25 Hours)					
+Capstone Project-Session -01 					1
+Capstone Project-Session -02					1
+Capstone Project-Session -03					1
+Capstone Project-Session -04					1
+Capstone Project-Session -05					1
+Capstone Project-Session -06					1
+Capstone Project-Session -07					1
+Capstone Project-Session -08					1
+Capstone Project-Session -09					1
+Capstone Project-Session -10					1
+Capstone Project-Session -11					1
+Capstone Project-Session -12					1
+Capstone Project-Session -13					1
+Capstone Project-Session -14					1
+Capstone Project-Session -15					1
+Capstone Project-Session -16					1
+Capstone Project-Session -17					1
+Capstone Project-Session -18					1
+Capstone Project-Session -19					1
+Capstone Project-Session -20					1
+Capstone Project-Session -21					1
+Full course revision- Part-1					1
+Full course revision- Part-2					1
+Summative  Assessment					2
